@@ -32,6 +32,8 @@ class Maze:
         self._create_cells()
         self._break_entrance_and_exit()
         self._break_walls_r(self._num_cols - 1, self._num_rows -1)
+        self._reset_cells_visited()
+        
     
     def _create_cells(self):
         self._cells = []
@@ -120,3 +122,51 @@ class Maze:
                     self._cells[i][j - 1].has_bottom_wall = False
             
             self._break_walls_r(neighbour_i, neighbour_j)
+        
+   
+    def _reset_cells_visited(self):
+        for column in self._cells:
+            for cell in column:
+                cell._visited = False
+
+    def solve(self):
+        return self._solve_r(0, 0)
+    
+    def _solve_r(self, i, j):
+        self._animate()
+        self._cells[i][j]._visited = True
+        
+        if self._cells[i][j] == self._cells[-1][-1]:
+            return True
+
+        to_visit = []
+
+        if i > 0:
+            if self._cells[i - 1][j]._visited == False and self._cells[i][j].has_left_wall == False:
+                to_visit.append([i - 1, j])
+        
+        if i < len(self._cells) - 1:
+            if self._cells[i + 1][j]._visited == False and self._cells[i][j].has_right_wall == False:
+                to_visit.append([i + 1, j])
+
+        if j > 0:
+            if self._cells[i][j - 1]._visited == False and self._cells[i][j].has_top_wall == False:
+                to_visit.append([i, j - 1])
+
+        if j < len(self._cells[0]) - 1:
+            if self._cells[i][j + 1]._visited == False and self._cells[i][j].has_bottom_wall == False:
+                to_visit.append([i, j + 1]) 
+        
+        for neighbour in to_visit:
+            neighbour_i = neighbour[0]
+            neighbour_j = neighbour[1]
+            next_cell = self._cells[neighbour_i][neighbour_j]
+            self._cells[i][j].draw_move(next_cell)
+
+            if self._solve_r(neighbour_i, neighbour_j):
+                return True
+
+            else:
+                self._cells[i][j].draw_move(next_cell, undo = True)
+        
+        return False
