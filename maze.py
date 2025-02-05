@@ -170,3 +170,4 @@ class Maze:
                 self._cells[i][j].draw_move(next_cell, undo = True)
         
         return False
+
