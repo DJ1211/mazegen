@@ -11,6 +11,63 @@ class Window:
         self.__solve_button = None 
         self.__maze_params = None
 
+        self.__root.configure(bg="white")
+
+        button_frame = Frame(self.__root,
+                             bg="white")
+        button_frame.pack(pady=20)
+
+        self.__solve_button = Button(button_frame, 
+                   text="Please Wait",
+                   state="disabled", 
+                   command=self.solve_button_clicked,
+                   activebackground="blue", 
+                   activeforeground="white",
+                   anchor="center",
+                   bd=3,
+                   bg="lightgray",
+                   cursor="hand2",
+                   disabledforeground="gray",
+                   fg="black",
+                   font=("Arial", 12),
+                   height=2,
+                   highlightbackground="black",
+                   highlightcolor="green",
+                   highlightthickness=2,
+                   justify="center",
+                   overrelief="raised",
+                   padx=10,
+                   pady=5,
+                   width=15,
+                   wraplength=100)
+
+        self.__new_maze_button = Button(button_frame, 
+                   text="Building...",
+                   state="disabled", 
+                   command=self.new_maze,
+                   activebackground="blue", 
+                   activeforeground="white",
+                   anchor="center",
+                   bd=3,
+                   bg="lightgray",
+                   cursor="hand2",
+                   disabledforeground="gray",
+                   fg="black",
+                   font=("Arial", 12),
+                   height=2,
+                   highlightbackground="black",
+                   highlightcolor="green",
+                   highlightthickness=2,
+                   justify="center",
+                   overrelief="raised",
+                   padx=10,
+                   pady=5,
+                   width=15,
+                   wraplength=100)
+
+        self.__solve_button.pack(side=LEFT, padx=10)
+        self.__new_maze_button.pack(side=LEFT, padx=10)
+
     def redraw(self):
         self.__root.update_idletasks()
         self.__root.update()
@@ -39,62 +96,10 @@ class Window:
 
     def set_maze(self, maze):
         self.__maze = maze
-
-    def create_button(self):
-        self.__root.configure(bg="white")
-
-        button_frame = Frame(self.__root,
-                             bg="white")
-        button_frame.pack(pady=20)
-
-        self.__solve_button = Button(button_frame, 
-                   text="Solve", 
-                   command=self.solve_button_clicked,
-                   activebackground="blue", 
-                   activeforeground="white",
-                   anchor="center",
-                   bd=3,
-                   bg="lightgray",
-                   cursor="hand2",
-                   disabledforeground="gray",
-                   fg="black",
-                   font=("Arial", 12),
-                   height=2,
-                   highlightbackground="black",
-                   highlightcolor="green",
-                   highlightthickness=2,
-                   justify="center",
-                   overrelief="raised",
-                   padx=10,
-                   pady=5,
-                   width=15,
-                   wraplength=100)
-
-        self.__new_maze_button = Button(button_frame, 
-                   text="New Maze", 
-                   command=self.new_maze,
-                   activebackground="blue", 
-                   activeforeground="white",
-                   anchor="center",
-                   bd=3,
-                   bg="lightgray",
-                   cursor="hand2",
-                   disabledforeground="gray",
-                   fg="black",
-                   font=("Arial", 12),
-                   height=2,
-                   highlightbackground="black",
-                   highlightcolor="green",
-                   highlightthickness=2,
-                   justify="center",
-                   overrelief="raised",
-                   padx=10,
-                   pady=5,
-                   width=15,
-                   wraplength=100)
-
-        self.__solve_button.pack(side=LEFT, padx=10)
-        self.__new_maze_button.pack(side=LEFT, padx=10)
+    
+    def enable_buttons(self):
+        self.__solve_button.config(text="Solve", state="normal")
+        self.__new_maze_button.config(text="New Maze", state="normal")
 
     def solve_button_clicked(self):
         if hasattr(self, '_Window__maze'):

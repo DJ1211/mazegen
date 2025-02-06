@@ -19,7 +19,7 @@ def main():
     win.set_maze_params(margin, num_rows, num_cols, cell_size_x, cell_size_y, Maze)
     print("maze created")
 
-    win.create_button()
+    win.enable_buttons()
     win.set_maze(maze)
     win.wait_for_close()
 
